@@ -1,0 +1,103 @@
+call plug#begin( '~/.config/nvim/bundle')
+
+Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'
+Plug 'icymind/NeoSolarized'
+Plug 'roxma/nvim-completion-manager'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+call plug#end()
+
+let g:mapleader = ';'
+
+set title
+set number
+set history=500
+set showcmd
+set gdefault
+set cursorline
+set smartcase
+set ignorecase
+set mouse=a
+set t_Co=256
+set showmatch
+set fileencoding=utf-8
+set wrap
+set linebreak
+set listchars=tab:\ \ ,trail:·
+set list
+set lazyredraw
+set hidden
+set splitright
+set splitbelow
+set path+=**
+set inccommand=nosplit
+set fillchars+=vert:\|
+set pumheight=30
+set exrc
+set secure
+set tagcase=smart
+
+set noswapfile
+set nobackup
+set nowb
+
+silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
+set undodir=~/.config/nvim/backups
+set undofile
+
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+set smartindent
+set nofoldenable
+set foldmethod=syntax
+
+
+set wildmode=list:full
+set wildignore=*.o,*.obj,*~                                                     "stuff to ignore when tab completing
+set wildignore+=*.git*
+set wildignore+=*.meteor*
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*cache*
+set wildignore+=*logs*
+set wildignore+=*node_modules/**
+set wildignore+=*DS_Store*
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
+set scrolloff=8                                                                 "Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=5
+
+" Bindings
+nnoremap <c-h> <C-w>h
+nnoremap <c-j> <C-w>j
+nnoremap <c-k> <C-w>k
+nnoremap <c-l> <C-w>l
+nnoremap <c-Space> <C-w>p
+
+nnoremap j gj
+nnoremap k gk
+nnoremap <leader><return> :nohl<cr>
+
+" ColorScheme
+silent! colorscheme NeoSolarized
+set background=dark
+
+" completion config
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['~/.local/bin/pyls']
+    \ }
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
+
