@@ -1,7 +1,8 @@
 FROM debian:stretch-backports
 
 ENV RUSTUP_HOME=/usr/local/rustup \
-    CARGO_HOME=/usr/local/cargo \ PATH=/usr/local/cargo/bin:$PATH \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH \
     TERM=screen-256color \
     DEBIAN_FRONTEND=nointeractive
 
@@ -12,28 +13,11 @@ RUN apt-get update && apt-get install -y \
       wget \
       git \
       software-properties-common \
-      python-dev \
-      python-pip \
-      python3-dev \
-      python3-pip \
-      ctags \
       shellcheck \
       netcat \
       ranger \ 
       ack-grep \
-      sqlite3 \
-      # For python crypto libraries
-      libssl-dev \
-      libffi-dev \
-      locales \
-      # For Youcompleteme
-      cmake
-
-# Generally a good idea to have these, extensions sometimes need them
-RUN locale-gen pl_PL.UTF-8
-ENV LANG pl_PL.UTF-8
-ENV LANGUAGE pl_PL:en
-ENV LC_ALL pl_PL.UTF-8
+      sqlite
 
 RUN set -eux; \
     \
