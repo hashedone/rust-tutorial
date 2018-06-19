@@ -1,8 +1,7 @@
 FROM debian:stretch-backports
 
 ENV RUSTUP_HOME=/usr/local/rustup \
-    CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH \
+    CARGO_HOME=/usr/local/cargo \ PATH=/usr/local/cargo/bin:$PATH \
     TERM=screen-256color \
     DEBIAN_FRONTEND=nointeractive
 
@@ -60,4 +59,14 @@ RUN set -eux; \
     rustc --version;
 
 RUN apt-get -t stretch-backports install -y neovim
+
+# Neovim needs this so that <ctrl-h> can work
+RUN infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > /tmp/$TERM.ti
+RUN tic /tmp/$TERM.ti
+
+CMD ["/bin/bash"]
+
+ADD nvimconfig /root/.config/nvim
+
+RUN nvim -i NONE -c PlugInstall -c quitall > /dev/null 2>&1
 
